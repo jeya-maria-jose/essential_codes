@@ -7,7 +7,7 @@ import imageio
 import cv2
 #file1 = open('brain_us_img_ids.txt','w+')
 
-location = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/play/new/*.png'
+location = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/play/image/*.png'
 save_loc = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/Final/unet_small_mix_tr3/train/label/'
 
 c= 1
@@ -18,7 +18,7 @@ for filename in glob.iglob(location):
 
 	# c=c+1
 
-	img = cv2.imread(filename,0)
+	img = cv2.imread(filename)
 	#print(img.shape)
 
 	#print(np.unique(img))
@@ -29,16 +29,22 @@ for filename in glob.iglob(location):
 	#print(np.unique(img))
 	
 	#label = img[:,0:256]
-	# num = filename[-8 :]
-	# tmp = filename[: -14]
+	num = filename[-8 :]
+	tmp = filename[: -14]
 
-	# label = cv2.imread(tmp+'label/'+num)
+	label = cv2.imread(tmp+'label/'+num)
 
-	# newimg = np.concatenate((img,label),axis = 1)
+	newimg = np.concatenate((img,label),axis = 1)
+	sub = (np.unique(label))==255
+	suble = len(sub)
 
-	# cv2.imwrite(tmp + 'new/'+num,newimg)
-	
-	cv2.imwrite(filename,img)
+	#print(num[: 4])
+	#cv2.imwrite(tmp + 'new/'+num,newimg)
+	if sub[suble-1]==True:
+		c+=1
+		cv2.imwrite(tmp + 'new2/'+num,newimg)
+
+
 	#print(tmp)
 	# if 'r' in tmp:
 	# 	os.remove(filename)
@@ -51,7 +57,7 @@ for filename in glob.iglob(location):
 	#cv2.imwrite(filename[: -8]+tmp[0:4]+'r'+'.png',img)
 	#os.remove(filename)
 
-
+print(c)
 
 
 

@@ -9,40 +9,24 @@ from scipy import ndimage, misc
 
 #file1 = open('brain_us_img_ids.txt','w+')
 
-location = '/home/jeyamariajose/Baselines/pytorch-CycleGAN-and-pix2pix/datasets/night2day/train/*.jpg'
-save_loc = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/night2day/train/'
-# location2 = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/Final/unet/test/img2/'
+location = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/wavelets/bior/results/*.png'
+save_loc = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/Final/res32/test/img/'
+location2 = '/media/jeyamariajose/7888230b-5c10-4229-90f2-c78bdae9c5de/Data/Brain_Ultrasound/Final/unet/test/label/'
 
 
 count = 0
 
 for filename in glob.iglob(location):
 
-	fl = filename.split("/")
-	tmp = fl[8]
-	image = cv2.imread(filename)
-	image = misc.imresize(image, (128, 256))
-	img = image[:,0:128]
-	label = image[:,128:256]
+	img = cv2.imread(filename,0)
+
+	tmp = filename[-8 :]
+
+	print(tmp)
+
+	image_resized = misc.imresize(img, (512,512))
 	
-	# tmp = filename[-8 :]
-	
-	# print(tmp)
-
-	# if tmp=="..jpg":
-	# os.remove(filename)
-
-	# a=int(tmp[: 4])
-	# a+=1300
-	# print(str(a))
-	
-	# print(tmp)
-	
-	cv2.imwrite(save_loc + "img/" + tmp,img)
-	cv2.imwrite(save_loc + "label/" + tmp,label)
-
-
-
+	cv2.imwrite(filename,image_resized)
 
 	#color_img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
 
